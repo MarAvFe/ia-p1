@@ -3,6 +3,10 @@
 # For Python 2 / 3 compatability
 from __future__ import print_function
 import math
+import sys
+import os
+sys.path.append(os.path.relpath("/home/marcello/Documents/tec/ia/ia-pc1/codigo"))
+from funciones4 import *
 
 LABELIDX = 0
 
@@ -102,6 +106,7 @@ def find_best_split(rows):
 class Leaf:
     def __init__(self, rows):
         self.guesses = class_counts(rows)
+        self.rows = rows
 
 
 class Decision_Node:
@@ -114,9 +119,7 @@ class Decision_Node:
         self.false_branch = false_branch
 
 
-def build_tree(rows, lblidx=0):
-    global LABELIDX
-    LABELIDX = lblidx
+def build_tree(rows):
     gain, question = find_best_split(rows)
 
     if gain == 0:
@@ -159,5 +162,97 @@ def print_leaf(counts):
         probs[lbl] = str(int(counts[lbl] / total * 100)) + "%"
     return probs
 
-def prune_tree(node, rows):
-    pass
+def get_node_rows(node):
+    if isinstance(node, Leaf):
+        return node.rows
+    rows = [] + get_node_rows(node.true_branch) + get_node_rows(node.false_branch)
+    return rows
+
+def prune_tree(node,rows):
+    prune_threshold = 0.1
+    if isinstance(node, Leaf):
+        return Leaf(get_node_rows(node))
+    tr = prune_tree(node.true_branch, rows)
+    fa = prune_tree(node.false_branch, rows)
+    all_rows = get_node_rows(node)
+    half_rows = int((len(rows)-1)/2)
+    if_was_leaf = info_gain([rows[half_rows]], [rows[half_rows]], entropy(all_rows)) #entropy(all_rows)
+    not_being_leaf = info_gain(get_node_rows(node.true_branch), get_node_rows(node.false_branch), if_was_leaf)
+    print("doop")
+    print(if_was_leaf)
+    print(not_being_leaf)
+    print(if_was_leaf + not_being_leaf)
+    if abs(if_was_leaf + not_being_leaf) > prune_threshold:
+        print("liff")
+        return Leaf(all_rows)
+    print("nodd")
+    return Decision_Node(node.question, tr, fa)
+
+
+N = 1000
+TESTPART = 0.9
+LABELIDX = 0
+doot = 0
+
+# con N = 100 y TESTPART = 0.2
+workPartRatio = 1 - TESTPART            # 0.8
+trainPartRatio = 0.8 * workPartRatio    # 0.64
+prunningSetRatio = 1 - trainPartRatio   # 0.36
+
+workPartIdx = int(N * workPartRatio)             # 80
+trainPartIdx = int(workPartIdx * trainPartRatio) # 64
+
+# arr[:64]   = trainSet
+# arr[64:80] = prunningSet
+# arr[80:]   = testSet
+
+def runAlgorithm():
+    #dataset = generar_muestra_pais(N)
+
+    #rawTree = build_tree(dataset[:trainPartIdx])
+    #print_tree(rawTree)
+
+    #prune_tree(rawTree, dataset[trainPartIdx:workPartIdx])
+    ##print(len(get_node_rows(rawTree.false_branch)))
+
+    #testing_data2 = dataset[workPartIdx:]
+    #errors = 0
+    #for row in testing_data2:
+    #    guess = print_leaf(classify(row, rawTree))
+    #    #global doot
+    #    #print("beep: " + str(doot))
+    #    #doot += 1
+    #    for beep in guess.keys():
+    #        if(row[0] != beep):
+    #            errors += 1
+    #            #print("Mistake on %s for %s" % (row[0], guess))
+
+    #testTotal = (N*(1-workPartRatio))
+    #print("Accuracy: " + str(100-((errors*100)/testTotal)))
+    #return 100-((errors*100)/testTotal)
+
+    dataset = generar_muestra_pais(N)
+    accuracy, newTree = run_tree(dataset[:workPartIdx])
+    prunnedTree = prune_tree(newTree, dataset[workPartIdx:])
+    print_tree(prunnedTree)
+    prunnedAccuracy = test_tree(prunnedTree, dataset[:workPartIdx])
+    print("prunned err: "+str(100-prunnedAccuracy))
+    return 100 - accuracy
+
+def test_tree(tree, data):
+    errors = 0
+    for row in data:
+        guess = print_leaf(classify(row, tree))
+        for beep in guess.keys():
+            if(row[0] != beep):
+                errors += 1
+    testTotal = (N*0.8)
+    return 100-((errors*100)/testTotal)
+
+def run_tree(dataset):
+    splitIdx = int(len(dataset)*0.8)
+    rawTree = build_tree(dataset[:splitIdx])
+    print_tree(rawTree)
+    testing_data2 = dataset[splitIdx:]
+    err = test_tree(rawTree, testing_data2)
+    return err, rawTree
