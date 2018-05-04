@@ -1,0 +1,141 @@
+nodos pre poda: 19
+nodos post poda: 11
+4.02% de error
+nodos pre poda: 5
+nodos post poda: 3
+1.51% de error
+nodos pre poda: 5
+nodos post poda: 3
+1.51% de error
+===== Processing set of 20
+nodos pre poda: 3
+nodos post poda: 3
+33.33% de error
+nodos pre poda: 1
+nodos post poda: 1
+0.0% de error
+nodos pre poda: 1
+nodos post poda: 1
+0.0% de error
+===== Processing set of 50
+nodos pre poda: 7
+nodos post poda: 7
+11.11% de error
+nodos pre poda: 1
+nodos post poda: 1
+22.22% de error
+nodos pre poda: 1
+nodos post poda: 1
+22.22% de error
+===== Processing set of 100
+nodos pre poda: 9
+nodos post poda: 9
+5.26% de error
+nodos pre poda: 5
+nodos post poda: 3
+5.26% de error
+nodos pre poda: 5
+nodos post poda: 3
+5.26% de error
+===== Processing set of 500
+nodos pre poda: 15
+nodos post poda: 11
+3.03% de error
+nodos pre poda: 5
+nodos post poda: 3
+4.04% de error
+nodos pre poda: 5
+nodos post poda: 3
+4.04% de error
+===== Processing set of 1000
+nodos pre poda: 21
+nodos post poda: 9
+6.03% de error
+nodos pre poda: 5
+nodos post poda: 3
+0.5% de error
+nodos pre poda: 5
+nodos post poda: 3
+0.5% de error
+===== Processing set of 2500
+nodos pre poda: 29
+nodos post poda: 9
+10.62% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.6% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.6% de error
+===== Processing set of 5000
+nodos pre poda: 29
+nodos post poda: 9
+9.91% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.2% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.2% de error
+===== Processing set of 7500
+nodos pre poda: 29
+nodos post poda: 9
+10.94% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.47% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.47% de error
+===== Processing set of 10000
+nodos pre poda: 27
+nodos post poda: 9
+11.61% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.15% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.15% de error
+===== Processing set of 25000
+nodos pre poda: 29
+nodos post poda: 9
+10.74% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.26% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.26% de error
+===== Processing set of 50000
+nodos pre poda: 29
+nodos post poda: 9
+11.21% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.14% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.14% de error
+===== Processing set of 75000
+nodos pre poda: 29
+nodos post poda: 9
+11.21% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.31% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.31% de error
+===== Processing set of 100000
+nodos pre poda: 29
+nodos post poda: 9
+10.43% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.21% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.21% de error
+[20,50,100,500,1000,2500,5000,7500,10000,25000,50000,75000,100000]
+[0.05182814598083496, 0.14002370834350586, 0.24518609046936035, 1.2663624286651611, 2.5744359493255615, 6.702411413192749, 13.350257396697998, 20.115368366241455, 27.97803544998169, 70.38313364982605, 142.0135486125946, 215.7131495475769, 347.14296555519104]
