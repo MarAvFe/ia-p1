@@ -22,55 +22,33 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import MinMaxScaler
 
 
-
-muestra_pais = generar_muestra_pais(5000)
-#analisis(muestra_pais)
-#print(muestra_pais)
-
-
-train_samples = []
-train_labels = []
-
-for k in muestra_pais:
-    train_labels.append(k[0])
+def run_model(train_samples,
+              train_labels,              
+              porc_num,
+              capas,
+              unidades_por_capa,
+              funcion_activacion):
     
-
-train_samples = muestra_pais
-for t in train_samples:
-    t = np.array(t)
-
-train_labels = np.array(train_labels)
-train_samples = np.array(train_samples)
-
-
-
-
-def crea_modelo():
+    cont = 0
     ##Creacion del modelo
     model = Sequential()
     #cada una es una layer
     #primer parametro cantidad nodos, input_shape (por ser primera capa), y funcion de activacion
-    #Dense(16, input_dim=19, init='normal', activation='relu'),
-    #model.add(Dense(19, input_dim=19, activation='relu'))
+    model.add(Dense(32, input_shape=(len(train_samples[0]),), activation='sigmoid'))
+    model.add(Dense(16, activation='relu'))
+    model.add(Dense(12, activation='softmax'))
+    model.add(Dense(12, activation='relu'))
 
-    #model.add(Dense(34*8, input_dim=19, init='normal', activation='relu'))
-    model.add(Dense(32, input_shape=(19,), activation='sigmoid'))
-    model.add(Dense(16, activation='relu'))
-    model.add(Dense(16, activation='relu'))
-    model.add(Dense(16, activation='relu'))
+    while(cont<capas):
+        model.add(Dense(unidades_por_capa, activation=funcion_activacion))
+        cont = cont+1
     model.add(Dense(1, input_dim=19, activation='relu'))
-    #model.add(Dense(1, activation='sigmoid'))
-        
 
     #parametros
-    # 1.Optimizador, usamos Adam (se puede usar otras sgd x ejemplo) 
-    # 2. perdida. Como la perdida es calculada, (se podria usar tambien mean score error)
-    # 3. Metricas. Array de metras que usamos en el modelo
-    model.compile(loss='binary_crossentropy',optimizer='adam', metrics = ['accuracy'])
+    #Perdida, optimizador y metrica a usar
+    model.compile(loss='mean_squared_error',optimizer='adam', metrics = ['accuracy'])
 
-
-    #Entrenamos el modelo
-    #parametros
+    #Entrenamos el modelo  .fit()
     # 1. muestra
     # 2. labels
     # 3. Batch_size = cuantas muestras queremos que el modelo agrupe cuando este entrenando
@@ -78,14 +56,145 @@ def crea_modelo():
     # 5. shuffle = si es true en cada epoch la info estara en orden distinto
     # 6. verbose, la cantidad de veces que imprime por cada corrida sobre la info
     model.summary()
-    model.fit(train_samples,train_labels, validation_split=0.1, batch_size = 100, epochs=50, shuffle = True, verbose = 2)
+    model.fit(train_samples,train_labels, validation_split=porc_num, batch_size = 100, epochs=300, shuffle = True, verbose = 2)
+
+    
+def prediccion_r1(muestra_pais,
+                  porc_poblacion,
+                  porcentaje_num,
+                  capas,
+                  unidades_por_capa,
+                  funcion_activacion):
+
+    train_samples = []
+    train_labels = []
+    
+    #llena labels
+    for k in muestra_pais:
+        train_labels.append(k[0])
+
+    #llena samples y convierte a numpy cada lista
+    train_samples = muestra_pais
+    for t in train_samples:
+        t = np.array(t)
+
+    #convierte ambos a numpy
+    train_labels = np.array(train_labels)
+    train_samples = np.array(train_samples)
+
+    run_model(train_samples,
+              train_labels,
+              porcentaje_num,
+              capas,
+              unidades_por_capa,
+              funcion_activacion)
     
 
+def prediccion_r2(muestra_pais,
+                  porc_poblacion,
+                  porcentaje_num,
+                  capas,
+                  unidades_por_capa,
+                  funcion_activacion):
+
+    train_samples_aux=[]
+    train_samples = []
+    train_labels = []
+    
+    #llena labels
+    for k in muestra_pais:
+        train_labels.append(k[1])
+
+    #llena samples y convierte a numpy cada lista
+    train_samples_aux = muestra_pais
+    for t in train_samples_aux:
+        lista_sin_r1 = t[1:]
+        train_samples.append(np.array(lista_sin_r1))
+
+
+    #convierte ambos a nclsumpy
+    train_labels = np.array(train_labels)
+    train_samples = np.array(train_samples)
+
+    run_model(train_samples,
+              train_labels,
+              porcentaje_num,
+              capas,
+              unidades_por_capa,
+              funcion_activacion)
+
+
+def prediccion_r2_con_r1(muestra_pais,
+                  porc_poblacion,
+                  porcentaje_num,
+                  capas,
+                  unidades_por_capa,
+                  funcion_activacion):
+
+    train_samples = []
+    train_labels = []
+    
+    #llena labels
+    for k in muestra_pais:
+        train_labels.append(k[1])
+
+    #llena samples y convierte a numpy cada lista
+    train_samples = muestra_pais
+    for t in train_samples:
+        t = np.array(t)
+
+    #convierte ambos a numpy
+    train_labels = np.array(train_labels)
+    train_samples = np.array(train_samples)
+
+    run_model(train_samples,
+              train_labels,
+              porcentaje_num,
+              capas,
+              unidades_por_capa,
+              funcion_activacion)
+
+def run_neural_networks(poblacion,
+                        porcentaje,
+                        capas,
+                        unidades_por_capa,
+                        funcion_activacion):
+    
+    #genera muestra
+    muestra_pais = generar_muestra_pais(poblacion)
+    
+    #obtiene el porcentaje de la poblacion
+    porc_poblacion = int((porcentaje*poblacion)/100) 
+    porcentaje_num = porcentaje/100  #e.g  0.2
+    
+    print(porc_poblacion)
+    print(porcentaje_num)
+
+    #Run ronda #1    
+    prediccion_r1(muestra_pais,
+                  porc_poblacion,
+                  porcentaje_num,
+                  capas,
+                  unidades_por_capa,
+                  funcion_activacion)
+
+    prediccion_r2(muestra_pais,
+                      porc_poblacion,
+                      porcentaje_num,
+                      capas,
+                      unidades_por_capa,
+                      funcion_activacion)
+
+    prediccion_r2_con_r1(muestra_pais,
+                      porc_poblacion,
+                      porcentaje_num,
+                      capas,
+                      unidades_por_capa,
+                      funcion_activacion)
 
 
 
 
+#poblacion #porcentaje #capas #unidades_por_capa #funcion activacion
+run_neural_networks(7000,20,2,10,"softmax")
 
-
-crea_modelo()
-print("hola")
