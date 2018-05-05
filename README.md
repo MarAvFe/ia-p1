@@ -65,7 +65,6 @@ pip install pandas
 pip install -U scikit-learn
 ```
 
-#### El generador de pc1
 
 ### Instalación
 
@@ -78,20 +77,31 @@ La variable “directorio” deberá de ser reemplazada por la ruta del sistema 
 
 
 
-## Ejecutar las pruebas
+## Ejecución de pruebas
 
 A continuación se explica cómo se debe de ejecutar cada una de las pruebas de los modelos, para que su ejecución sea exitosa:
 
+* Regresión logística
 ```
-Give an example
+python3 main.py --regresion-logistica --l1 1 --l2 0
 ```
-
+* Árbol
+```
+python3 main.py --arbol --umbral  -poda
+```
+* Red Neuronal
+```
+python3 main.py --numero-capas 2 --unidades-por-capa 2 --funcion-activacion
+```
+* KNN
+```
+python3 main.py --knn --k 15 --poblacion 100
+```
 
 ## Implementación
 En este apartado del documento, se detalla cómo se realizó la implementación de cada uno de los modelos programados.
 
 ### Regresión Logística
-##### Implementación
 
 Para la implementación de la regresión lineal, se utilizó la biblioteca Pandas, para el modelado de la información. Pandas es una librería que proporciona estructuras de datos flexibles, que permiten trabajar con dichos datos de manera eficiente.
 Inicialmente, utilizando el generador desarrollado previamente, se obtiene la información de una determinada cantidad de votantes (muestra).
@@ -113,18 +123,28 @@ También se procede a obtener la exactitud o accuracy del modelo.
 
 Por último se utiliza una función para predecir el resultado de la votación, obtenida, según un conjunto de datos, que describen a un determinado votante. Para ello se utilizó el  modelo que fue previamente entrenado.
 
-##### Conclusiones
-* Al ejecutar la prueba con un número pequeño de muestras, la exactitud del modelo disminuye también.
- 
+Al ejecutar la prueba con un número pequeño de muestras, la exactitud del modelo disminuye también.
+
 
 
 ### Árbol de Decisión
 
-Cómo se hizo...
+El algoritmo se encarga de construir un árbol basado en el set de pruebas que se vaya a utilizar. Este divide a muestra según la razón de pruebas, donde si la razón es un 20%, divide en 2 la muestra, y la primera mitad la divide en 2 para utilizar una parte para entrenamiento y otra para poda.
+
+Por ejemplo si es está utilizando una muestra de 1500 elementos, y la razón de pruebas es de 20%, los elementos del 0-1200 se utilizan para elaboración del modelo y del 1200-1500 para pruebas. De los primeros 1200, el 80% sería de 0-960 para entrenamiento y de 960-1200 para la poda.
 
 ### Red Neuronal
 
-Cómo se hizo...
+
+Este modelo posee una función principal, que recibe como parámetros la cantidad de votantes que debe de poseer la muestra a generar, el porcentaje de muestra que será utilizado para entrenar al modelo, cantidad de capas que tendrá la red neuronal, las unidades por capas, y por último, la función de activación.
+
+Para confeccionar un predictor de tipo red neuronal, el primer paso a seguir es crear un modelo. En este caso, se creó un modelo de red secuencial, utilizando el parámetro previamente recibido, se le añaden capas al modelo, se configura la cantidad de nodos que tendrá cada capa, y se hace el envío de la función de activación a cada una de estas últimas. Vale resaltar que cada capa puede recibir una función de activación distinta.
+Un aspecto importante a tener en cuenta cuando se desarrolla un modelo de este tipo, es que a la primera capa se le debe de hacer saber cuál será el formato de entrada que tendrán los datos; para ello, se usa la función input_shape. Se utiliza la función de pérdida, que en este caso es categorical_crossentropy, de Keras. Finalmente se agrega el optimizador y la métrica de precisión, que en este caso será “accurancy”.
+Posteriormente, se procederá a entrenar el modelo. Para ello, se utilizó la función .fit, que recibe un X y una Y. X representa a la lista de votantes (una lista de votantes, en la cuál cada votante incluye todos sus atributos).  La variable Y representa por quién votó esta persona. Recibe dos variables: batch_size (que sirve para agrupar muestras cuando el modelo está entrenando), epoochs que es la cantidad de recorridos que se desea que se ejecuten de una determinada información. La función shuffle mezclará la información después de cada corrida.
+
+Ya una vez el modelo entrenado, se procederá a hacer algunas predicciones. Se utiliza predict para predecir las clases.
+
+Para realizar una predicción de la primera ronda (r1), se toma la muestra total y la divide en una parte para entrenamiento y otra parte para validación. La función train_samples que es X; y train_lables, que representa a Y (por quién votó la persona). Para la primera ronda, a la función train_samples se le quita la etiqueta en el índice 0 (por quién va a votar la persona), y se mantiene el resto de parámetros. Y en train_labels, se toma el valor de por quién votó en la primera ronda dicha persona, y estos datos son los que se suministran al modelo de la red neuronal. La red neuronal recibe numpy arrays, por eso, la información anterior pasará a este formato. Los train_labels (por quién votó la persona), se debe de convertir a “categorical”, pues existen distintas opciones de voto (categorías).
 
 ### KNN
 
@@ -145,13 +165,6 @@ Cómo se hizo...
 ## Licencia
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Reconocimientos
-
-* [Decision Tree Classifier from Scratch](https://github.com/random-forests/tutorials/blob/master/decision_tree.py)
-* Hat tip to anyone who's code was used
-* Inspiration
-* etc
 
 ## Referencias
 * Programa Estado de La Nación (2018). Distribución de juntas receptoras de votos. Recuperado de https://www.estadonacion.or.cr/files/biblioteca_virtual/otras_publicaciones/IndicadoresCantonales_Censos2000y011.xlsx
