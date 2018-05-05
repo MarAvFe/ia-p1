@@ -31,7 +31,7 @@ from sklearn.preprocessing import MinMaxScaler
 globalList = []
 
 def run_model(train_samples,
-              train_labels,              
+              train_labels,
               porc_num,
               capas,
               unidades_por_capa,
@@ -78,7 +78,7 @@ def run_model(train_samples,
         
     
 
-    
+
 def prediccion_r1(muestra_pais,
                   porc_poblacion,
                   porcentaje_num,
@@ -90,7 +90,7 @@ def prediccion_r1(muestra_pais,
     train_samples = []
     for f in muestra_pais:
         train_samples.append(np.array(f[2:]))
-        
+
 
     #Train labels tiene por quien voto la persona
     train_labels = []
@@ -111,7 +111,7 @@ def prediccion_r1(muestra_pais,
               capas,
               unidades_por_capa,
               funcion_activacion)
-    
+
 
 def prediccion_r2(muestra_pais,
                   porc_poblacion,
@@ -133,10 +133,10 @@ def prediccion_r2(muestra_pais,
     #convierte ambos a numpy
     train_labels = np.array(train_labels)
     train_samples = np.array(train_samples)
-    
+
     #pasa a categorical crossentrophy
     train_labels = keras.utils.to_categorical(train_labels, num_classes=19)
-    
+
     run_model(train_samples,
               train_labels,
               porcentaje_num,
@@ -151,7 +151,7 @@ def prediccion_r2_con_r1(muestra_pais,
                   capas,
                   unidades_por_capa,
                   funcion_activacion):
-        
+
     train_samples = []
     train_labels = []
     #Train samples contiene los votantes con sus atributos
@@ -163,7 +163,7 @@ def prediccion_r2_con_r1(muestra_pais,
     #convierte ambos a numpy
     train_labels = np.array(train_labels)
     train_samples = np.array(train_samples)
-    
+
     #pasa a categorical crossentrophy
     train_labels = keras.utils.to_categorical(train_labels, num_classes=19)
 
@@ -173,24 +173,25 @@ def prediccion_r2_con_r1(muestra_pais,
               capas,
               unidades_por_capa,
               funcion_activacion)
-    
+
 
 def run_neural_networks(poblacion,
                         porcentaje,
                         capas,
                         unidades_por_capa,
                         funcion_activacion):
-    
+
     #genera muestra
     muestra_pais = generar_muestra_pais(poblacion)
 
-     
+
     #obtiene el porcentaje de la poblacion
-    porc_poblacion = int((porcentaje*poblacion)/100) 
+    porc_poblacion = int((porcentaje*poblacion)/100)
     porcentaje_num = porcentaje/100  #e.g  0.2
-    
+
     print(porc_poblacion)
     print(porcentaje_num)
+
 
     
     for l in muestra_pais:
@@ -219,6 +220,22 @@ def run_neural_networks(poblacion,
                       unidades_por_capa,
                       funcion_activacion)
 
+    #Run ronda #1
+##    prediccion_r1(muestra_pais,
+##                  porc_poblacion,
+##                  porcentaje_num,
+##                  capas,
+##                  unidades_por_capa,
+##                  funcion_activacion)
+##
+##    prediccion_r2(muestra_pais,
+##                      porc_poblacion,
+##                      porcentaje_num,
+##                      capas,
+##                      unidades_por_capa,
+##                      funcion_activacion)
+
+
     prediccion_r2_con_r1(muestra_pais,
                       porc_poblacion,
                       porcentaje_num,
@@ -229,6 +246,7 @@ def run_neural_networks(poblacion,
 
 start_time = time.time()
 #poblacion #porcentaje #capas #unidades_por_capa #funcion activacion
+
 run_neural_networks(100,20,2,15,"relu")
 print("--- %s seconds ---" % (time.time() - start_time))
 
@@ -238,4 +256,7 @@ escribeLinea("mop","Redes",globalList)
 ##perro= [[3,4,56,7,8],[45,7,9,4,7]]
 
 
+
+
+#run_neural_networks(50,20,2,15,"relu")
 
