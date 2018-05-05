@@ -3,9 +3,12 @@ import keras.utils
 import numpy as np
 import sys
 import os
+import csv
+import time
 sys.path.append(os.path.relpath("C:\\Users\\Nelson\\IA\\ia-pc1\\codigo"))
 from funciones4 import *
 
+from creaCSV import escribeLinea
 
 from keras import utils as np_utils
 from keras import backend as K
@@ -24,6 +27,8 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import MinMaxScaler
 
+
+globalList = []
 
 def run_model(train_samples,
               train_labels,              
@@ -66,6 +71,12 @@ def run_model(train_samples,
     predictions = model.predict_classes(train_samples, batch_size=10, verbose=1)
     print(predictions)
     print(len(predictions))
+    
+    for k in globalList:
+        indice = globalList.index(k)
+        k.insert(indice,predictions[indice])
+        
+    
 
     
 def prediccion_r1(muestra_pais,
@@ -172,7 +183,8 @@ def run_neural_networks(poblacion,
     
     #genera muestra
     muestra_pais = generar_muestra_pais(poblacion)
-    
+
+     
     #obtiene el porcentaje de la poblacion
     porc_poblacion = int((porcentaje*poblacion)/100) 
     porcentaje_num = porcentaje/100  #e.g  0.2
@@ -180,20 +192,32 @@ def run_neural_networks(poblacion,
     print(porc_poblacion)
     print(porcentaje_num)
 
+    
+    for l in muestra_pais:
+        globalList.append(l[2:])
+
+    cont = 0 
+    for k in globalList:
+        if(cont < porc_poblacion):
+            k.append("False")
+        else:
+            k.append("True")
+        
+        cont = cont + 1
     #Run ronda #1    
-##    prediccion_r1(muestra_pais,
-##                  porc_poblacion,
-##                  porcentaje_num,
-##                  capas,
-##                  unidades_por_capa,
-##                  funcion_activacion)
-##
-##    prediccion_r2(muestra_pais,
-##                      porc_poblacion,
-##                      porcentaje_num,
-##                      capas,
-##                      unidades_por_capa,
-##                      funcion_activacion)
+    prediccion_r1(muestra_pais,
+                  porc_poblacion,
+                  porcentaje_num,
+                  capas,
+                  unidades_por_capa,
+                  funcion_activacion)
+
+    prediccion_r2(muestra_pais,
+                      porc_poblacion,
+                      porcentaje_num,
+                      capas,
+                      unidades_por_capa,
+                      funcion_activacion)
 
     prediccion_r2_con_r1(muestra_pais,
                       porc_poblacion,
@@ -202,6 +226,16 @@ def run_neural_networks(poblacion,
                       unidades_por_capa,
                       funcion_activacion)
 
+
+start_time = time.time()
 #poblacion #porcentaje #capas #unidades_por_capa #funcion activacion
-run_neural_networks(50,20,2,15,"relu")
+run_neural_networks(100,20,2,15,"relu")
+print("--- %s seconds ---" % (time.time() - start_time))
+
+escribeLinea("mop","Redes",globalList)
+
+
+##perro= [[3,4,56,7,8],[45,7,9,4,7]]
+
+
 
