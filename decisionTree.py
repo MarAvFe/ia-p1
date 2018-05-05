@@ -1,5 +1,3 @@
-#https://www.youtube.com/watch?v=LDRbO9a6XPU
-
 # For Python 2 / 3 compatability
 from __future__ import print_function
 import math
@@ -217,7 +215,7 @@ def runAlgorithm(dataset, testRate):
     #print_tree(prunnedTree, "")
     prunnedAccuracy = test_tree(prunnedTree, dataset[:workPartIdx])
     print("nodos post poda: " + str(count_nodes(newTree)))
-    return 100 - prunnedAccuracy
+    return 100 - prunnedAccuracy, []
 
 def test_tree(tree, data):
     errors = 0

@@ -19,7 +19,7 @@ def knnByFoot(set, testRate, k):
         guess = closest(distances, k)
         guesses.append(guess)
     accuracy = 100-compare(guesses, test)
-    return accuracy
+    return accuracy, guesses
 
 def closest(distances, k):
     sortDist = sortByDistance(distances)

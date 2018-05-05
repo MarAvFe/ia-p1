@@ -1,0 +1,33 @@
+===== Processing set of 100
+21:33:33
+30% de error
+===== Processing set of 160
+21:33:34
+22% de error
+===== Processing set of 256
+21:33:34
+18% de error
+===== Processing set of 409
+21:33:35
+21% de error
+===== Processing set of 655
+21:33:36
+21% de error
+===== Processing set of 1048
+21:33:39
+23% de error
+===== Processing set of 1677
+21:33:49
+20% de error
+===== Processing set of 2684
+21:34:34
+18% de error
+===== Processing set of 4294
+21:37:29
+16% de error
+===== Processing set of 6871
+21:48:28
+17% de error
+[0.25621533393859863, 0.4134788513183594, 0.7326197624206543, 1.3873748779296875, 3.2591540813446045, 10.018842697143555, 44.125696659088135, 175.09350180625916, 659.6140561103821, 2338.735724925995]
+[100, 160, 256, 409, 655, 1048, 1677, 2684, 4294, 6871]
+
