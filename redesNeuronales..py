@@ -1,10 +1,13 @@
 import keras
+import keras.utils
 import numpy as np
 import sys
 import os
 sys.path.append(os.path.relpath("C:\\Users\\Nelson\\IA\\ia-pc1\\codigo"))
 from funciones4 import *
 
+
+from keras import utils as np_utils
 from keras import backend as K
 from keras.models import Sequential
 from keras.layers import Activation
@@ -28,13 +31,13 @@ def run_model(train_samples,
               capas,
               unidades_por_capa,
               funcion_activacion):
-    
+
     cont = 0
     ##Creacion del modelo
     model = Sequential()
     #cada una es una layer
     #primer parametro cantidad nodos, input_shape (por ser primera capa), y funcion de activacion
-    model.add(Dense(32, input_shape=(len(train_samples[0]),), activation='sigmoid'))
+    model.add(Dense(32, input_shape=(len(train_samples[0]),), activation='relu'))
     model.add(Dense(16, activation='relu'))
     model.add(Dense(12, activation='softmax'))
     model.add(Dense(12, activation='relu'))
@@ -42,11 +45,11 @@ def run_model(train_samples,
     while(cont<capas):
         model.add(Dense(unidades_por_capa, activation=funcion_activacion))
         cont = cont+1
-    model.add(Dense(1, input_dim=19, activation='relu'))
+    model.add(Dense(19, input_dim=19, activation='relu'))
 
     #parametros
     #Perdida, optimizador y metrica a usar
-    model.compile(loss='mean_squared_error',optimizer='adam', metrics = ['accuracy'])
+    model.compile(loss='categorical_crossentropy',optimizer='rmsprop', metrics = ['accuracy'])
 
     #Entrenamos el modelo  .fit()
     # 1. muestra
@@ -56,7 +59,13 @@ def run_model(train_samples,
     # 5. shuffle = si es true en cada epoch la info estara en orden distinto
     # 6. verbose, la cantidad de veces que imprime por cada corrida sobre la info
     model.summary()
-    model.fit(train_samples,train_labels, validation_split=porc_num, batch_size = 100, epochs=300, shuffle = True, verbose = 2)
+    model.fit(train_samples,train_labels,validation_split=porc_num, batch_size = 20, epochs=100, shuffle = True, verbose = 2)
+
+
+    #predictions = model.predict(train_samples,batch_size=10,verbose=0)
+    predictions = model.predict_classes(train_samples, batch_size=10, verbose=1)
+    print(predictions)
+    print(len(predictions))
 
     
 def prediccion_r1(muestra_pais,
@@ -66,21 +75,24 @@ def prediccion_r1(muestra_pais,
                   unidades_por_capa,
                   funcion_activacion):
 
+    #Train samples contiene los votantes con sus atributos
     train_samples = []
+    for f in muestra_pais:
+        train_samples.append(np.array(f[2:]))
+        
+
+    #Train labels tiene por quien voto la persona
     train_labels = []
-    
-    #llena labels
     for k in muestra_pais:
         train_labels.append(k[0])
 
-    #llena samples y convierte a numpy cada lista
-    train_samples = muestra_pais
-    for t in train_samples:
-        t = np.array(t)
 
+    print(train_labels)
     #convierte ambos a numpy
-    train_labels = np.array(train_labels)
     train_samples = np.array(train_samples)
+    train_labels = np.array(train_labels)
+    #pasa a categorical crossentrophy
+    train_labels = keras.utils.to_categorical(train_labels, num_classes=19)
 
     run_model(train_samples,
               train_labels,
@@ -97,25 +109,23 @@ def prediccion_r2(muestra_pais,
                   unidades_por_capa,
                   funcion_activacion):
 
-    train_samples_aux=[]
+    #Train samples contiene los votantes con sus atributos
     train_samples = []
+    for f in muestra_pais:
+        train_samples.append(np.array(f[2:]))
+
     train_labels = []
-    
-    #llena labels
+    #Train labels tiene por quien voto la persona
     for k in muestra_pais:
         train_labels.append(k[1])
 
-    #llena samples y convierte a numpy cada lista
-    train_samples_aux = muestra_pais
-    for t in train_samples_aux:
-        lista_sin_r1 = t[1:]
-        train_samples.append(np.array(lista_sin_r1))
-
-
-    #convierte ambos a nclsumpy
+    #convierte ambos a numpy
     train_labels = np.array(train_labels)
     train_samples = np.array(train_samples)
-
+    
+    #pasa a categorical crossentrophy
+    train_labels = keras.utils.to_categorical(train_labels, num_classes=19)
+    
     run_model(train_samples,
               train_labels,
               porcentaje_num,
@@ -130,22 +140,21 @@ def prediccion_r2_con_r1(muestra_pais,
                   capas,
                   unidades_por_capa,
                   funcion_activacion):
-
+        
     train_samples = []
     train_labels = []
-    
-    #llena labels
-    for k in muestra_pais:
-        train_labels.append(k[1])
-
-    #llena samples y convierte a numpy cada lista
-    train_samples = muestra_pais
-    for t in train_samples:
-        t = np.array(t)
+    #Train samples contiene los votantes con sus atributos
+    #Train labels tiene por quien voto la persona
+    for f in muestra_pais:
+        train_labels.append(f.pop(1))  #f.pop(1)  #le quito el voto de segunda ronda, lo meto en labels
+        train_samples.append(np.array(f))
 
     #convierte ambos a numpy
     train_labels = np.array(train_labels)
     train_samples = np.array(train_samples)
+    
+    #pasa a categorical crossentrophy
+    train_labels = keras.utils.to_categorical(train_labels, num_classes=19)
 
     run_model(train_samples,
               train_labels,
@@ -153,6 +162,7 @@ def prediccion_r2_con_r1(muestra_pais,
               capas,
               unidades_por_capa,
               funcion_activacion)
+    
 
 def run_neural_networks(poblacion,
                         porcentaje,
@@ -171,19 +181,19 @@ def run_neural_networks(poblacion,
     print(porcentaje_num)
 
     #Run ronda #1    
-    prediccion_r1(muestra_pais,
-                  porc_poblacion,
-                  porcentaje_num,
-                  capas,
-                  unidades_por_capa,
-                  funcion_activacion)
-
-    prediccion_r2(muestra_pais,
-                      porc_poblacion,
-                      porcentaje_num,
-                      capas,
-                      unidades_por_capa,
-                      funcion_activacion)
+##    prediccion_r1(muestra_pais,
+##                  porc_poblacion,
+##                  porcentaje_num,
+##                  capas,
+##                  unidades_por_capa,
+##                  funcion_activacion)
+##
+##    prediccion_r2(muestra_pais,
+##                      porc_poblacion,
+##                      porcentaje_num,
+##                      capas,
+##                      unidades_por_capa,
+##                      funcion_activacion)
 
     prediccion_r2_con_r1(muestra_pais,
                       porc_poblacion,
@@ -192,9 +202,6 @@ def run_neural_networks(poblacion,
                       unidades_por_capa,
                       funcion_activacion)
 
-
-
-
 #poblacion #porcentaje #capas #unidades_por_capa #funcion activacion
-run_neural_networks(7000,20,2,10,"softmax")
+run_neural_networks(50,20,2,15,"relu")
 
