@@ -1,0 +1,235 @@
+nodos pre poda: 3
+nodos post poda: 3
+20.0% de error
+nodos pre poda: 3
+nodos post poda: 3
+0.0% de error
+nodos pre poda: 3
+nodos post poda: 3
+0.0% de error
+===== Processing set of 100
+18:41:04
+nodos pre poda: 11
+nodos post poda: 11
+10.53% de error
+nodos pre poda: 3
+nodos post poda: 3
+15.79% de error
+nodos pre poda: 3
+nodos post poda: 3
+15.79% de error
+===== Processing set of 160
+18:41:04
+nodos pre poda: 15
+nodos post poda: 13
+9.68% de error
+nodos pre poda: 3
+nodos post poda: 3
+0.0% de error
+nodos pre poda: 3
+nodos post poda: 3
+0.0% de error
+===== Processing set of 256
+18:41:05
+nodos pre poda: 17
+nodos post poda: 17
+1.96% de error
+nodos pre poda: 3
+nodos post poda: 3
+0.0% de error
+nodos pre poda: 3
+nodos post poda: 3
+0.0% de error
+===== Processing set of 409
+18:41:05
+nodos pre poda: 17
+nodos post poda: 7
+16.05% de error
+nodos pre poda: 3
+nodos post poda: 3
+0.0% de error
+nodos pre poda: 3
+nodos post poda: 3
+0.0% de error
+===== Processing set of 655
+18:41:06
+nodos pre poda: 17
+nodos post poda: 11
+6.15% de error
+nodos pre poda: 3
+nodos post poda: 3
+0.0% de error
+nodos pre poda: 3
+nodos post poda: 3
+0.0% de error
+===== Processing set of 1048
+18:41:08
+nodos pre poda: 23
+nodos post poda: 9
+11.48% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.91% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.91% de error
+===== Processing set of 1677
+18:41:11
+nodos pre poda: 23
+nodos post poda: 11
+8.96% de error
+nodos pre poda: 5
+nodos post poda: 3
+0.6% de error
+nodos pre poda: 5
+nodos post poda: 3
+0.6% de error
+===== Processing set of 2684
+18:41:15
+7nodos pre poda: 27
+nodos post poda: 9
+11.38% de error
+nodos pre poda: 5
+nodos post poda: 3
+0.75% de error
+nodos pre poda: 5
+nodos post poda: 3
+0.75% de error
+===== Processing set of 4294
+18:41:22
+nodos pre poda: 29
+nodos post poda: 9
+11.54% de error
+nodos pre poda: 5
+nodos post poda: 3
+1.05% de error
+nodos pre poda: 5
+nodos post poda: 3
+1.05% de error
+===== Processing set of 6871
+18:41:35
+nodos pre poda: 29
+nodos post poda: 9
+9.1% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.31% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.31% de error
+===== Processing set of 10995
+18:41:54
+nodos pre poda: 29
+nodos post poda: 9
+10.56% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.32% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.32% de error
+===== Processing set of 17592
+18:42:31
+nodos pre poda: 29
+nodos post poda: 9
+10.8% de error
+nodos pre poda: 7
+nodos post poda: 3
+0.85% de error
+nodos pre poda: 7
+nodos post poda: 3
+0.85% de error
+===== Processing set of 28147
+18:43:30
+nodos pre poda: 29
+nodos post poda: 9
+10.39% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.17% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.17% de error
+===== Processing set of 45035
+18:45:02
+nodos pre poda: 29
+nodos post poda: 9
+10.8% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.1% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.1% de error
+===== Processing set of 72057
+18:47:31
+nodos pre poda: 29
+nodos post poda: 9
+10.96% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.12% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.12% de error
+===== Processing set of 115292
+18:51:12
+nodos pre poda: 29
+nodos post poda: 9
+11.05% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.18% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.18% de error
+===== Processing set of 184467
+18:56:59
+nodos pre poda: 29
+nodos post poda: 9
+10.53% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.07% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.07% de error
+===== Processing set of 295147
+19:06:09
+nodos pre poda: 29
+nodos post poda: 9
+10.69% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.14% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.14% de error
+===== Processing set of 472236
+19:21:01
+nodos pre poda: 29
+nodos post poda: 9
+10.65% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.11% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.11% de error
+===== Processing set of 755578
+19:44:55
+nodos pre poda: 29
+nodos post poda: 9
+10.63% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.12% de error
+nodos pre poda: 7
+nodos post poda: 3
+1.12% de error
+[0.2374429702758789, 0.3807511329650879, 0.6157171726226807, 0.9853641986846924, 1.600722074508667, 2.6181037425994873, 4.365525484085083, 7.117157936096191, 12.784482479095459, 19.39612913131714, 37.18654990196228, 58.55872058868408, 92.42313504219055, 148.2424967288971, 221.07991790771484, 346.95782136917114, 550.7145092487335, 891.4632704257965, 1434.3679821491241, 2359.1946115493774]
+[100, 160, 256, 409, 655, 1048, 1677, 2684, 4294, 6871, 10995, 17592, 28147, 45035, 72057, 115292, 184467, 295147, 472236, 755578]
+
+
+
+

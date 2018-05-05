@@ -173,20 +173,6 @@ def count_nodes(tree):
         return 1
     return count_nodes(tree.true_branch) + count_nodes(tree.false_branch) + 1
 
-def prune_treeOld(node,rows):
-    prune_threshold = 0.1
-    if isinstance(node, Leaf):
-        return Leaf(get_node_rows(node))
-    tr = prune_tree(node.true_branch, rows)
-    fa = prune_tree(node.false_branch, rows)
-    all_rows = get_node_rows(node)
-    half_rows = int((len(rows)-1)/2)
-    if_was_leaf = info_gain([rows[half_rows]], [rows[half_rows]], entropy(all_rows)) #entropy(all_rows)
-    not_being_leaf = info_gain(get_node_rows(node.true_branch), get_node_rows(node.false_branch), if_was_leaf)
-    if abs(if_was_leaf + not_being_leaf) > prune_threshold:
-        return Leaf(all_rows)
-    return Decision_Node(node.question, tr, fa)
-
 def prune_tree(node,rows):
     prune_threshold = 0.2
     if isinstance(node, Leaf):
@@ -208,14 +194,12 @@ def prune_tree(node,rows):
 
 
 
-def runAlgorithm(dataset):
+def runAlgorithm(dataset, testRate):
     N = len(dataset)
-    TESTPART = 0.8
     LABELIDX = 0
-    doot = 0
 
-    # con N = 100 y TESTPART = 0.2
-    workPartRatio = 1 - TESTPART            # 0.8
+    # con N = 100 y testRate = 0.2
+    workPartRatio = 1 - testRate            # 0.8
     trainPartRatio = 0.8 * workPartRatio    # 0.64
     prunningSetRatio = 1 - trainPartRatio   # 0.36
 
